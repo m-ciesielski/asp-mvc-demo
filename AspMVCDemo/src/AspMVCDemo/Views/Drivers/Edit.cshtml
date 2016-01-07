@@ -1,0 +1,82 @@
+@model AspMVCDemo.Models.Driver
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h2>Edit</h2>
+
+<form asp-action="Edit">
+    <div class="form-horizontal">
+        <h4>Driver</h4>
+        <hr />
+        <div asp-validation-summary="ValidationSummary.ModelOnly" class="text-danger"></div>
+        <input type="hidden" asp-for="ID" />
+        <div class="form-group">
+            <label asp-for="PESEL" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="PESEL" class="form-control" />
+                <span asp-validation-for="PESEL" class="text-danger" />
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <div class="checkbox">
+                    <input asp-for="available" />
+                    <label asp-for="available"></label>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <div class="checkbox">
+                    <input asp-for="deleted" />
+                    <label asp-for="deleted"></label>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="firstName" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="firstName" class="form-control" />
+                <span asp-validation-for="firstName" class="text-danger" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="salary" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="salary" class="form-control" />
+                <span asp-validation-for="salary" class="text-danger" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="salaryBonus" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="salaryBonus" class="form-control" />
+                <span asp-validation-for="salaryBonus" class="text-danger" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="lastName" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="lastName" class="form-control" />
+                <span asp-validation-for="lastName" class="text-danger" />
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Save" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+</form>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+}

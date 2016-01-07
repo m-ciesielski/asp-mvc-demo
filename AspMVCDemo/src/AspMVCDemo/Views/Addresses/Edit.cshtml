@@ -1,0 +1,66 @@
+@model AspMVCDemo.Models.Address
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h2>Edit</h2>
+
+<form asp-action="Edit">
+    <div class="form-horizontal">
+        <h4>Address</h4>
+        <hr />
+        <div asp-validation-summary="ValidationSummary.ModelOnly" class="text-danger"></div>
+        <input type="hidden" asp-for="ID" />
+        <div class="form-group">
+            <label asp-for="code" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="code" class="form-control" />
+                <span asp-validation-for="code" class="text-danger" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="country" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="country" class="form-control" />
+                <span asp-validation-for="country" class="text-danger" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="houseNumber" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="houseNumber" class="form-control" />
+                <span asp-validation-for="houseNumber" class="text-danger" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="street" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="street" class="form-control" />
+                <span asp-validation-for="street" class="text-danger" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="town" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="town" class="form-control" />
+                <span asp-validation-for="town" class="text-danger" />
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Save" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+</form>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+}

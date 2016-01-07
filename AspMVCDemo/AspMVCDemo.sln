@@ -1,0 +1,32 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.24720.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{DAC2C2DC-A59D-4213-AD2D-6168B582C46C}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{68BAD35A-26B2-4147-9754-3CAA721A2E87}"
+	ProjectSection(SolutionItems) = preProject
+		global.json = global.json
+	EndProjectSection
+EndProject
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "AspMVCDemo", "src\AspMVCDemo\AspMVCDemo.xproj", "{CD29118F-0690-4477-A26C-104AFA652A66}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{CD29118F-0690-4477-A26C-104AFA652A66}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CD29118F-0690-4477-A26C-104AFA652A66}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CD29118F-0690-4477-A26C-104AFA652A66}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CD29118F-0690-4477-A26C-104AFA652A66}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{CD29118F-0690-4477-A26C-104AFA652A66} = {DAC2C2DC-A59D-4213-AD2D-6168B582C46C}
+	EndGlobalSection
+EndGlobal
