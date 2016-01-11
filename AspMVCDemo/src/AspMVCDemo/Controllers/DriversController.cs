@@ -41,6 +41,7 @@ namespace AspMVCDemo.Controllers
         // GET: Drivers/Create
         public IActionResult Create()
         {
+            ViewBag.Addresses = _context.Address.ToList();
             return View();
         }
 

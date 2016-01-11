@@ -1,0 +1,74 @@
+@model IEnumerable<AspMVCDemo.Models.Vehicle>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.VIN)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.available)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.brand)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.engine)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.horsepower)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.mileage)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.model)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.productionDate)
+        </th>
+        <th></th>
+    </tr>
+    
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.VIN)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.available)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.brand)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.engine)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.horsepower)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.mileage)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.model)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.productionDate)
+        </td>
+        <td>
+            <a asp-action="Edit" asp-route-id="@item.ID">Edit</a> |
+            <a asp-action="Details" asp-route-id="@item.ID">Details</a> |
+            <a asp-action="Delete" asp-route-id="@item.ID">Delete</a>
+        </td>
+    </tr>
+}
+</table>

@@ -31,5 +31,6 @@ namespace AspMVCDemo.Models
         */
         public DbSet<Address> Address { get; set; }
         public DbSet<Driver> Driver { get; set; }
+        public DbSet<Vehicle> Vehicle { get; set; }
     }
 }
