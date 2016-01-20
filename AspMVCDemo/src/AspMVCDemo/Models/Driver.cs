@@ -1,4 +1,5 @@
-﻿using Microsoft.Data.Entity;
+﻿using AspMVCDemo.Validators;
+using Microsoft.Data.Entity;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -24,9 +25,7 @@ namespace AspMVCDemo.Models
         [Display(Name = "Salary")]
         public decimal salary { get; set; }
 
-        //TODO: addd pesel validation
-        [StringLength(11, MinimumLength = 11)]
-        [Required]
+        [Pesel]
         public string PESEL { get; set; }
 
         [Display(Name = "Salary Bonus")]
@@ -41,6 +40,7 @@ namespace AspMVCDemo.Models
         public Driver()
         {
             deleted = false;
+            available = true;
         }
     }
 }

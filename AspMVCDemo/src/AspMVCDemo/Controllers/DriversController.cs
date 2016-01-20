@@ -3,6 +3,8 @@ using Microsoft.AspNet.Mvc;
 using Microsoft.AspNet.Mvc.Rendering;
 using Microsoft.Data.Entity;
 using AspMVCDemo.Models;
+using System.Collections.Generic;
+using System;
 
 namespace AspMVCDemo.Controllers
 {
@@ -16,9 +18,13 @@ namespace AspMVCDemo.Controllers
         }
 
         // GET: Drivers
-        public IActionResult Index()
+        public IActionResult Index(string searchString)
         {
-            return View(_context.Driver.ToList());
+            var drivers = from d in _context.Driver select d;
+
+            if (!string.IsNullOrEmpty(searchString))
+                drivers = drivers.Where(d => d.lastName.Contains(searchString));
+            return View(drivers);
         }
 
         // GET: Drivers/Details/5
@@ -41,7 +47,7 @@ namespace AspMVCDemo.Controllers
         // GET: Drivers/Create
         public IActionResult Create()
         {
-            ViewBag.Addresses = _context.Address.ToList();
+            ViewBag.Addresses = new SelectList(_context.Address.ToList().Select(a => new { value = a.ID, text = a.ToString() }), "value", "text");
             return View();
         }
 
@@ -50,12 +56,14 @@ namespace AspMVCDemo.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult Create(Driver driver)
         {
+            Console.WriteLine(driver);
             if (ModelState.IsValid)
             {
                 _context.Driver.Add(driver);
                 _context.SaveChanges();
                 return RedirectToAction("Index");
             }
+            ViewBag.Addresses = new SelectList(_context.Address.ToList().Select( a => new { value=a.ID, text=a.ToString() }), "value", "text");
             return View(driver);
         }
 
@@ -72,6 +80,7 @@ namespace AspMVCDemo.Controllers
             {
                 return HttpNotFound();
             }
+
             return View(driver);
         }
 

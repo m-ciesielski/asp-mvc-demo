@@ -12,19 +12,19 @@
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.code)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.country)
+            @Html.DisplayNameFor(model => model.street)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.houseNumber)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.street)
+            @Html.DisplayNameFor(model => model.code)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.town)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.country)
         </th>
         <th></th>
     </tr>
@@ -32,20 +32,23 @@
 @foreach (var item in Model) {
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.code)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.country)
+            @Html.DisplayFor(modelItem => item.street)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.houseNumber)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.street)
+            @Html.DisplayFor(modelItem => item.code)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.town)
         </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.country)
+        </td>
+        
+        
+        
         <td>
             <a asp-action="Edit" asp-route-id="@item.ID">Edit</a> |
             <a asp-action="Details" asp-route-id="@item.ID">Details</a> |

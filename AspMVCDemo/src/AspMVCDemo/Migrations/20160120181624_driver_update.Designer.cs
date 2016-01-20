@@ -8,9 +8,10 @@ using AspMVCDemo.Models;
 namespace AspMVCDemo.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20160120181624_driver_update")]
+    partial class driver_update
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "7.0.0-rc1-16348")
@@ -46,7 +47,9 @@ namespace AspMVCDemo.Migrations
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("PESEL");
+                    b.Property<string>("PESEL")
+                        .IsRequired()
+                        .HasAnnotation("MaxLength", 11);
 
                     b.Property<int?>("addressID")
                         .IsRequired();
@@ -75,13 +78,11 @@ namespace AspMVCDemo.Migrations
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("VIN")
-                        .IsRequired();
+                    b.Property<string>("VIN");
 
                     b.Property<bool>("available");
 
-                    b.Property<string>("brand")
-                        .IsRequired();
+                    b.Property<string>("brand");
 
                     b.Property<int>("engine");
 
@@ -89,8 +90,7 @@ namespace AspMVCDemo.Migrations
 
                     b.Property<int>("mileage");
 
-                    b.Property<string>("model")
-                        .IsRequired();
+                    b.Property<string>("model");
 
                     b.Property<DateTime>("productionDate");
 

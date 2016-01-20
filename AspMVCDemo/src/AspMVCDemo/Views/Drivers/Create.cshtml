@@ -60,13 +60,8 @@
         <div class="form-group">
             <label asp-for="address" class="col-md-2 control-label"></label>
             <div class="col-md-10">
-                <select asp-for="address" class="form-control">
                     @*Generating addresses dropdown list *@
-                    @foreach (var item in ViewBag.Addresses)
-                    {
-                        <option>@item.street @item.houseNumber,@item.code @item.town</option>
-                    }
-                </select>
+                    @Html.DropDownList("Addresses")
             </div>
             <a asp-action="AddAddress">
                 Dodaj nowy adres
