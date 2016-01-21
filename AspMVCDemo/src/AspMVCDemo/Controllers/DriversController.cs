@@ -23,11 +23,10 @@ namespace AspMVCDemo.Controllers
         [Authorize]
         public IActionResult Index(string searchString)
         {
-            var drivers = from d in _context.Driver select d;
-
             if (!string.IsNullOrEmpty(searchString))
-                drivers = drivers.Where(d => d.lastName.Contains(searchString));
-            return View(drivers);
+                return View(_context.Driver.Where(d => d.lastName.Contains(searchString)));
+            else
+                return View(_context.Driver.Include(a => a.address));
         }
 
         // GET: Drivers/Details/5
@@ -102,6 +101,7 @@ namespace AspMVCDemo.Controllers
         public IActionResult Edit(DriverViewModel driverViewModel)
         {
             var driver = driverViewModel.driver;
+
             if (ModelState.IsValid)
             {
                 driver.address = (Address)_context.Address.Single(a => a.ID.Equals(driverViewModel.addressId));

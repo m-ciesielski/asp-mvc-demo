@@ -20,7 +20,7 @@ namespace AspMVCDemo.Validators
             string pesel;
 
             // validation FTW!
-            return ValidationResult.Success;
+            //return ValidationResult.Success;
 
             if (value == null)
                 return ValidationResult.Success;
@@ -33,24 +33,27 @@ namespace AspMVCDemo.Validators
             if (pesel.Length != 11)
                 return new ValidationResult(String.Format("Pesel %s is not 11 characters long", pesel));
             
+            foreach(char c in pesel)
+            {
+                if(!char.IsDigit(c))
+                    return new ValidationResult(String.Format("Pesel %s has non-digit character.", pesel));
+            }
+
             // calculate checksum 
             int sum = 0;
-            sum += 1 * pesel.ElementAt(0);
-            sum += 3 * pesel.ElementAt(1);
-            sum += 7 * pesel.ElementAt(2);
-            sum += 9 * pesel.ElementAt(3);
-            sum += 1 * pesel.ElementAt(4);
-            sum += 3 * pesel.ElementAt(5);
-            sum += 7 * pesel.ElementAt(6);
-            sum += 9 * pesel.ElementAt(7);
-            sum += 1 * pesel.ElementAt(8);
-            sum += 3 * pesel.ElementAt(9);
+            sum += 1 * (int)char.GetNumericValue(pesel.ElementAt(0));
+            sum += 3 * (int)char.GetNumericValue(pesel.ElementAt(1));
+            sum += 7 * (int)char.GetNumericValue(pesel.ElementAt(2));
+            sum += 9 * (int)char.GetNumericValue(pesel.ElementAt(3));
+            sum += 1 * (int)char.GetNumericValue(pesel.ElementAt(4));
+            sum += 3 * (int)char.GetNumericValue(pesel.ElementAt(5));
+            sum += 7 * (int)char.GetNumericValue(pesel.ElementAt(6));
+            sum += 9 * (int)char.GetNumericValue(pesel.ElementAt(7));
+            sum += 1 * (int)char.GetNumericValue(pesel.ElementAt(8));
+            sum += 3 * (int)char.GetNumericValue(pesel.ElementAt(9));
+            sum += 1 * (int)char.GetNumericValue(pesel.ElementAt(10));
 
-            sum %= 10;
-            sum = 10 - sum;
-            sum %= 10;
-
-            if(sum != pesel.ElementAt(10))
+            if(sum % 10 != 0)
                 return new ValidationResult(String.Format("Pesel %s doesn't have correct checksum.", pesel));
 
             return ValidationResult.Success;

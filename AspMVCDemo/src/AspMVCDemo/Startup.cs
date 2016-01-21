@@ -75,8 +75,8 @@ namespace AspMVCDemo
                         .CreateScope())
             {
                 // Since EF 7 doesn't support Seed() like methods, it will be done quite awfully here...
-                // or perhaps it won't, since updating DB context here seems to have no effect on database.
                 var context = serviceScope.ServiceProvider.GetService<ApplicationDbContext>();
+                /*
                 context.Address.Add(new Address
                 {
                     code = "12-232",
@@ -96,6 +96,7 @@ namespace AspMVCDemo
                 });
 
                 context.SaveChanges();
+                */
             }
 
                 if (env.IsDevelopment())
