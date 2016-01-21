@@ -38,14 +38,20 @@
         <div class="form-group">
             <label asp-for="driver.salary" class="col-md-2 control-label"></label>
             <div class="col-md-10">
-                <input asp-for="driver.salary" class="form-control" />
+                <div class="input-group">
+                    <span class="input-group-addon">PLN</span>
+                    <input asp-for="driver.salary" class="form-control" />
+                </div>
                 <span asp-validation-for="driver.salary" class="text-danger" />
             </div>
         </div>
         <div class="form-group">
             <label asp-for="driver.salaryBonus" class="col-md-2 control-label"></label>
             <div class="col-md-10">
-                <input asp-for="driver.salaryBonus" class="form-control" />
+                <div class="input-group">
+                    <span class="input-group-addon">PLN</span>
+                    <input asp-for="driver.salaryBonus" class="form-control" />
+                </div>
                 <span asp-validation-for="driver.salaryBonus" class="text-danger" />
             </div>
         </div>

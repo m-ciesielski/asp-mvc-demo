@@ -8,9 +8,10 @@ using AspMVCDemo.Models;
 namespace AspMVCDemo.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20160121222553_clients")]
+    partial class clients
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "7.0.0-rc1-16348")
@@ -87,26 +88,6 @@ namespace AspMVCDemo.Migrations
                         .HasAnnotation("Relational:Name", "UserNameIndex");
 
                     b.HasAnnotation("Relational:TableName", "AspNetUsers");
-                });
-
-            modelBuilder.Entity("AspMVCDemo.Models.Client", b =>
-                {
-                    b.Property<int>("ID")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<int?>("AddressID");
-
-                    b.Property<string>("Bank_account")
-                        .HasAnnotation("MaxLength", 60);
-
-                    b.Property<string>("NIP")
-                        .HasAnnotation("MaxLength", 9);
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasAnnotation("MaxLength", 30);
-
-                    b.HasKey("ID");
                 });
 
             modelBuilder.Entity("AspMVCDemo.Models.Driver", b =>
@@ -244,13 +225,6 @@ namespace AspMVCDemo.Migrations
                     b.HasKey("UserId", "RoleId");
 
                     b.HasAnnotation("Relational:TableName", "AspNetUserRoles");
-                });
-
-            modelBuilder.Entity("AspMVCDemo.Models.Client", b =>
-                {
-                    b.HasOne("AspMVCDemo.Models.Address")
-                        .WithMany()
-                        .HasForeignKey("AddressID");
                 });
 
             modelBuilder.Entity("AspMVCDemo.Models.Driver", b =>

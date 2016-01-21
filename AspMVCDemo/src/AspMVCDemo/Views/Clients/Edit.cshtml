@@ -1,0 +1,74 @@
+@model AspMVCDemo.ViewModels.ClientViewModel
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h2>Edit</h2>
+
+<form asp-action="Edit">
+    <div class="form-horizontal">
+        <h4>Client</h4>
+        <hr />
+        <div asp-validation-summary="ValidationSummary.ModelOnly" class="text-danger"></div>
+        <input type="hidden" asp-for="Client.ID" />
+        <div class="form-group">
+            <label asp-for="Client.Bank_account" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="Client.Bank_account" class="form-control" />
+                <span asp-validation-for="Client.Bank_account" class="text-danger" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="Client.NIP" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="Client.NIP" class="form-control" />
+                <span asp-validation-for="Client.NIP" class="text-danger" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="Client.Name" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="Client.Name" class="form-control" />
+                <span asp-validation-for="Client.Name" class="text-danger" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="addressId" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                @*Generating addresses dropdown list *@
+                <select asp-for="addressId" class="form-control">
+                    @*Generating addresses dropdown list *@
+                    @foreach (var item in ViewBag.Addresses)
+                    {
+                        @if (item.ID == Model.addressId)
+                        {
+                            <option value="@item.ID" selected> @item </option>
+                        }
+                        else
+                        {
+                            <option value="@item.ID"> @item </option>
+                        }
+
+                    }
+
+                </select>
+            </div>
+          </div>
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Save" class="btn btn-default" />
+                </div>
+            </div>
+        </div>
+</form>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+}
