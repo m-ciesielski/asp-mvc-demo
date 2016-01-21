@@ -59,7 +59,9 @@ namespace AspMVCDemo
             // Add application services.
             services.AddTransient<IEmailSender, AuthMessageSender>();
             services.AddTransient<ISmsSender, AuthMessageSender>();
+
         }
+
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
@@ -69,28 +71,57 @@ namespace AspMVCDemo
 
             app.UseApplicationInsightsRequestTelemetry();
 
-            if (env.IsDevelopment())
-            {
-                app.UseBrowserLink();
-                app.UseDeveloperExceptionPage();
-                app.UseDatabaseErrorPage();
-            }
-            else
-            {
-                app.UseExceptionHandler("/Home/Error");
-
-                // For more details on creating database during deployment see http://go.microsoft.com/fwlink/?LinkID=615859
-                try
-                {
-                    using (var serviceScope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>()
+            using (var serviceScope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>()
                         .CreateScope())
-                    {
-                        serviceScope.ServiceProvider.GetService<ApplicationDbContext>()
-                             .Database.Migrate();
-                    }
-                }
-                catch { }
+            {
+                // Since EF 7 doesn't support Seed() like methods, it will be done quite awfully here...
+                // or perhaps it won't, since updating DB context here seems to have no effect on database.
+                var context = serviceScope.ServiceProvider.GetService<ApplicationDbContext>();
+                context.Address.Add(new Address
+                {
+                    code = "12-232",
+                    country = "Polska",
+                    houseNumber = "6",
+                    street = "Prawa",
+                    town = "Szczecin"
+                });
+
+                context.Address.Add(new Address
+                {
+                    code = "13-567",
+                    country = "Polska",
+                    houseNumber = "7",
+                    street = "Lewa",
+                    town = "Szczecin"
+                });
+
+                context.SaveChanges();
             }
+
+                if (env.IsDevelopment())
+                {
+                    app.UseBrowserLink();
+                    app.UseDeveloperExceptionPage();
+                    app.UseDatabaseErrorPage();
+                }
+                else
+                {
+                    app.UseExceptionHandler("/Home/Error");
+
+                    // For more details on creating database during deployment see http://go.microsoft.com/fwlink/?LinkID=615859
+                    try
+                    {
+                        using (var serviceScope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>()
+                            .CreateScope())
+                        {
+                            serviceScope.ServiceProvider.GetService<ApplicationDbContext>()
+                                 .Database.Migrate();
+
+                           
+                        }
+                    }
+                    catch { }
+                }
 
             app.UseIISPlatformHandler(options => options.AuthenticationDescriptions.Clear());
 

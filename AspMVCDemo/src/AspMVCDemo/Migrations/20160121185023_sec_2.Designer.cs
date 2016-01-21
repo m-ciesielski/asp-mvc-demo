@@ -8,9 +8,10 @@ using AspMVCDemo.Models;
 namespace AspMVCDemo.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20160121185023_sec_2")]
+    partial class sec_2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "7.0.0-rc1-16348")
@@ -96,7 +97,8 @@ namespace AspMVCDemo.Migrations
 
                     b.Property<string>("PESEL");
 
-                    b.Property<int?>("addressID");
+                    b.Property<int?>("addressID")
+                        .IsRequired();
 
                     b.Property<bool>("available");
 

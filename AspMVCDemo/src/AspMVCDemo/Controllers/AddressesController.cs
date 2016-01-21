@@ -3,6 +3,7 @@ using Microsoft.AspNet.Mvc;
 using Microsoft.AspNet.Mvc.Rendering;
 using Microsoft.Data.Entity;
 using AspMVCDemo.Models;
+using Microsoft.AspNet.Authorization;
 
 namespace AspMVCDemo.Controllers
 {
@@ -16,12 +17,14 @@ namespace AspMVCDemo.Controllers
         }
 
         // GET: Addresses
+        [Authorize]
         public IActionResult Index()
         {
             return View(_context.Address.ToList());
         }
 
         // GET: Addresses/Details/5
+        [Authorize]
         public IActionResult Details(int? id)
         {
             if (id == null)
@@ -39,6 +42,7 @@ namespace AspMVCDemo.Controllers
         }
 
         // GET: Addresses/Create
+        [Authorize(Roles = "Operator")]
         public IActionResult Create()
         {
             return View();
@@ -47,6 +51,7 @@ namespace AspMVCDemo.Controllers
         // POST: Addresses/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Operator")]
         public IActionResult Create(Address address)
         {
             if (ModelState.IsValid)
@@ -59,6 +64,7 @@ namespace AspMVCDemo.Controllers
         }
 
         // GET: Addresses/Edit/5
+        [Authorize(Roles = "Operator")]
         public IActionResult Edit(int? id)
         {
             if (id == null)
@@ -77,6 +83,7 @@ namespace AspMVCDemo.Controllers
         // POST: Addresses/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Operator")]
         public IActionResult Edit(Address address)
         {
             if (ModelState.IsValid)
@@ -90,6 +97,7 @@ namespace AspMVCDemo.Controllers
 
         // GET: Addresses/Delete/5
         [ActionName("Delete")]
+        [Authorize(Roles = "Operator")]
         public IActionResult Delete(int? id)
         {
             if (id == null)
@@ -109,6 +117,7 @@ namespace AspMVCDemo.Controllers
         // POST: Addresses/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Operator")]
         public IActionResult DeleteConfirmed(int id)
         {
             Address address = _context.Address.Single(m => m.ID == id);

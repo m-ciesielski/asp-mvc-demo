@@ -5,6 +5,8 @@ using Microsoft.Data.Entity;
 using AspMVCDemo.Models;
 using System.Collections.Generic;
 using System;
+using Microsoft.AspNet.Authorization;
+using AspMVCDemo.ViewModels;
 
 namespace AspMVCDemo.Controllers
 {
@@ -18,6 +20,7 @@ namespace AspMVCDemo.Controllers
         }
 
         // GET: Drivers
+        [Authorize]
         public IActionResult Index(string searchString)
         {
             var drivers = from d in _context.Driver select d;
@@ -28,6 +31,7 @@ namespace AspMVCDemo.Controllers
         }
 
         // GET: Drivers/Details/5
+        [Authorize]
         public IActionResult Details(int? id)
         {
             if (id == null)
@@ -45,29 +49,35 @@ namespace AspMVCDemo.Controllers
         }
 
         // GET: Drivers/Create
+        [Authorize(Roles = "Operator")]
         public IActionResult Create()
         {
-            ViewBag.Addresses = new SelectList(_context.Address.ToList().Select(a => new { value = a.ID, text = a.ToString() }), "value", "text");
-            return View();
+            //ViewBag.Addresses = new SelectList(_context.Address.ToList().Select(a => new { value = a, text = a.ToString() }), "value", "text");
+            ViewBag.Addresses = _context.Address.ToList();
+            return View(new DriverViewModel());
         }
 
         // POST: Drivers/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create(Driver driver)
+        [Authorize(Roles = "Operator")]
+        public IActionResult Create(DriverViewModel driverViewModel)
         {
-            Console.WriteLine(driver);
             if (ModelState.IsValid)
             {
+                var driver = driverViewModel.driver;
+                driver.address = (Address) _context.Address.Single(a => a.ID.Equals(driverViewModel.addressId));
                 _context.Driver.Add(driver);
                 _context.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.Addresses = new SelectList(_context.Address.ToList().Select( a => new { value=a.ID, text=a.ToString() }), "value", "text");
-            return View(driver);
+            //ViewBag.Addresses = new SelectList(_context.Address.ToList().Select( a => new { value=a.ID, text=a.ToString() }), "value", "text");
+            ViewBag.Addresses = _context.Address.ToList();
+            return View(driverViewModel);
         }
 
         // GET: Drivers/Edit/5
+        [Authorize(Roles = "Operator")]
         public IActionResult Edit(int? id)
         {
             if (id == null)
@@ -75,31 +85,37 @@ namespace AspMVCDemo.Controllers
                 return HttpNotFound();
             }
 
-            Driver driver = _context.Driver.Single(m => m.ID == id);
+            Driver driver = _context.Driver.Where(m => m.ID == id).Include(a => a.address).FirstOrDefault();
             if (driver == null)
             {
                 return HttpNotFound();
             }
 
-            return View(driver);
+            ViewBag.Addresses = _context.Address.ToList();
+            return View(new DriverViewModel(driver, driver.address.ID));
         }
 
         // POST: Drivers/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(Driver driver)
+        [Authorize(Roles = "Operator")]
+        public IActionResult Edit(DriverViewModel driverViewModel)
         {
+            var driver = driverViewModel.driver;
             if (ModelState.IsValid)
             {
+                driver.address = (Address)_context.Address.Single(a => a.ID.Equals(driverViewModel.addressId));
                 _context.Update(driver);
                 _context.SaveChanges();
                 return RedirectToAction("Index");
             }
-            return View(driver);
+            ViewBag.Addresses = _context.Address.ToList();
+            return View(new DriverViewModel(driver, driver.address.ID));
         }
 
         // GET: Drivers/Delete/5
         [ActionName("Delete")]
+        [Authorize(Roles = "Operator")]
         public IActionResult Delete(int? id)
         {
             if (id == null)
@@ -119,6 +135,7 @@ namespace AspMVCDemo.Controllers
         // POST: Drivers/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Operator")]
         public IActionResult DeleteConfirmed(int id)
         {
             Driver driver = _context.Driver.Single(m => m.ID == id);

@@ -1,4 +1,4 @@
-@model AspMVCDemo.Models.Driver
+@model AspMVCDemo.ViewModels.DriverViewModel
 
 @{
     ViewData["Title"] = "Create";
@@ -15,57 +15,53 @@
         <hr />
         <div asp-validation-summary="ValidationSummary.ModelOnly" class="text-danger"></div>
         <div class="form-group">
-            <label asp-for="firstName" class="col-md-2 control-label"></label>
+            <label asp-for="driver.firstName" class="col-md-2 control-label"></label>
             <div class="col-md-10">
-                <input asp-for="firstName" class="form-control" />
-                <span asp-validation-for="firstName" class="text-danger" />
+                <input asp-for="driver.firstName" class="form-control" />
+                <span asp-validation-for="driver.firstName" class="text-danger" />
             </div>
         </div>
         <div class="form-group">
-            <label asp-for="lastName" class="col-md-2 control-label"></label>
+            <label asp-for="driver.lastName" class="col-md-2 control-label"></label>
             <div class="col-md-10">
-                <input asp-for="lastName" class="form-control" />
-                <span asp-validation-for="lastName" class="text-danger" />
+                <input asp-for="driver.lastName" class="form-control" />
+                <span asp-validation-for="driver.lastName" class="text-danger" />
             </div>
         </div>
         <div class="form-group">
-            <label asp-for="PESEL" class="col-md-2 control-label"></label>
+            <label asp-for="driver.PESEL" class="col-md-2 control-label"></label>
             <div class="col-md-10">
-                <input asp-for="PESEL" class="form-control" />
-                <span asp-validation-for="PESEL" class="text-danger" />
+                <input asp-for="driver.PESEL" class="form-control" />
+                <span asp-validation-for="driver.PESEL" class="text-danger" />
             </div>
         </div>
         <div class="form-group">
-            <label asp-for="salary" class="col-md-2 control-label"></label>
+            <label asp-for="driver.salary" class="col-md-2 control-label"></label>
             <div class="col-md-10">
-                <input asp-for="salary" class="form-control" />
-                <span asp-validation-for="salary" class="text-danger" />
+                <input asp-for="driver.salary" class="form-control" />
+                <span asp-validation-for="driver.salary" class="text-danger" />
             </div>
         </div>
         <div class="form-group">
-            <label asp-for="salaryBonus" class="col-md-2 control-label"></label>
+            <label asp-for="driver.salaryBonus" class="col-md-2 control-label"></label>
             <div class="col-md-10">
-                <input asp-for="salaryBonus" class="form-control" />
-                <span asp-validation-for="salaryBonus" class="text-danger" />
+                <input asp-for="driver.salaryBonus" class="form-control" />
+                <span asp-validation-for="driver.salaryBonus" class="text-danger" />
             </div>
         </div>
         <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <div class="checkbox">
-                    <input asp-for="available" />
-                    <label asp-for="available"></label>
-                </div>
-            </div>
-        </div>
-        <div class="form-group">
-            <label asp-for="address" class="col-md-2 control-label"></label>
+            <label asp-for="addressId" class="col-md-2 control-label"></label>
             <div class="col-md-10">
+                @*Generating addresses dropdown list *@
+                <select asp-for="addressId" class="form-control">
                     @*Generating addresses dropdown list *@
-                    @Html.DropDownList("Addresses")
+                    @foreach (var item in ViewBag.Addresses)
+                    {
+                      <option value="@item.ID"> @item </option>
+                    }
+
+                </select>
             </div>
-            <a asp-action="AddAddress">
-                Dodaj nowy adres
-            </a>
 
         </div>
         <div class="form-group">

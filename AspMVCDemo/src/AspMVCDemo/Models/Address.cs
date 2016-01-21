@@ -37,5 +37,7 @@ namespace AspMVCDemo.Models
         {
             return String.Format("{0} {1}, {2} {3}, {4}", street, houseNumber, code, town, country );
         }
+
+        public virtual ICollection<Driver> Drivers { get; set; }
     }
 }
