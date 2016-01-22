@@ -10,6 +10,8 @@ using Microsoft.Extensions.Logging;
 using AspMVCDemo.Models;
 using AspMVCDemo.Services;
 using AspMVCDemo.ViewModels.Manage;
+using AspMVCDemo.ViewModels.Account;
+using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace AspMVCDemo.Controllers
 {
@@ -21,19 +23,22 @@ namespace AspMVCDemo.Controllers
         private readonly IEmailSender _emailSender;
         private readonly ISmsSender _smsSender;
         private readonly ILogger _logger;
+        private ApplicationDbContext _context;
 
         public ManageController(
         UserManager<ApplicationUser> userManager,
         SignInManager<ApplicationUser> signInManager,
         IEmailSender emailSender,
         ISmsSender smsSender,
-        ILoggerFactory loggerFactory)
+        ILoggerFactory loggerFactory,
+        ApplicationDbContext context)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _emailSender = emailSender;
             _smsSender = smsSender;
             _logger = loggerFactory.CreateLogger<ManageController>();
+            _context = context;
         }
 
         //
@@ -87,6 +92,30 @@ namespace AspMVCDemo.Controllers
         public IActionResult AddPhoneNumber()
         {
             return View();
+        }
+
+        //
+        // GET: /Manage/AddRole
+        public IActionResult AddRole()
+        {
+            ViewBag.Roles = _context.Roles.ToList();
+            return View();
+        }
+
+        //
+        // Post: /Manage/AddRole
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult AddRole(RoleViewModel roleViewModel)
+        {
+            if(!string.IsNullOrEmpty(roleViewModel.name))
+            {
+                _context.Roles.Add(new IdentityRole(roleViewModel.name));
+                _context.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            ViewBag.Roles = _context.Roles.ToList();
+            return View(roleViewModel);
         }
 
         //

@@ -1,0 +1,41 @@
+﻿@model RoleViewModel
+@{
+    ViewData["Title"] = "Add new role";
+}
+
+<h2>@ViewData["Title"].</h2>
+
+
+
+
+<form asp-controller="Manage" asp-action="AddRole" asp-route-returnurl="@ViewData["ReturnUrl"]" method="post" class="form-horizontal" role="form">
+    <h4>Add a new role.</h4>
+    <h5>@ViewData["Status"]</h5>
+    <hr />
+    <div>
+        <ul class="list-group">
+            @foreach (var role in ViewBag.Roles)
+            {
+                <li class="list-group-item">@role</li>
+            }
+        </ul>
+</div>
+
+    <div asp-validation-summary="ValidationSummary.All" class="text-danger"></div>
+    <div class="form-group">
+        <label asp-for="name" class="col-md-2 control-label"></label>
+        <div class="col-md-10">
+            <input asp-for="name" class="form-control" />
+            <span asp-validation-for="name" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <button type="submit" class="btn btn-default">Submit</button>
+        </div>
+    </div>
+</form>
+
+@section Scripts {
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
+}

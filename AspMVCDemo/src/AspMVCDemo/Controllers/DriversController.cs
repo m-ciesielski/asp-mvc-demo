@@ -38,7 +38,7 @@ namespace AspMVCDemo.Controllers
                 return HttpNotFound();
             }
 
-            Driver driver = _context.Driver.Single(m => m.ID == id);
+            Driver driver = _context.Driver.Where(m => m.ID == id).Include(a => a.address).FirstOrDefault();
             if (driver == null)
             {
                 return HttpNotFound();
