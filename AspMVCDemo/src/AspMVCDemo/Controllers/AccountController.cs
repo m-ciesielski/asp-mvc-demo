@@ -12,6 +12,7 @@ using Microsoft.Extensions.Logging;
 using AspMVCDemo.Models;
 using AspMVCDemo.Services;
 using AspMVCDemo.ViewModels.Account;
+using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace AspMVCDemo.Controllers
 {
@@ -20,6 +21,7 @@ namespace AspMVCDemo.Controllers
     {
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
+        private readonly ApplicationDbContext _dbContext;
         private readonly IEmailSender _emailSender;
         private readonly ISmsSender _smsSender;
         private readonly ILogger _logger;
@@ -29,13 +31,15 @@ namespace AspMVCDemo.Controllers
             SignInManager<ApplicationUser> signInManager,
             IEmailSender emailSender,
             ISmsSender smsSender,
-            ILoggerFactory loggerFactory)
+            ILoggerFactory loggerFactory,
+            ApplicationDbContext dbContext)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _emailSender = emailSender;
             _smsSender = smsSender;
             _logger = loggerFactory.CreateLogger<AccountController>();
+            _dbContext = dbContext;
         }
 
         //
@@ -114,6 +118,10 @@ namespace AspMVCDemo.Controllers
                     //var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: HttpContext.Request.Scheme);
                     //await _emailSender.SendEmailAsync(model.Email, "Confirm your account",
                     //    "Please confirm your account by clicking this link: <a href=\"" + callbackUrl + "\">link</a>");
+                    if (model.Operator)
+                        await _userManager.AddToRoleAsync(user, "Operator");
+                        
+
                     await _signInManager.SignInAsync(user, isPersistent: false);
                     _logger.LogInformation(3, "User created a new account with password.");
                     return RedirectToAction(nameof(HomeController.Index), "Home");

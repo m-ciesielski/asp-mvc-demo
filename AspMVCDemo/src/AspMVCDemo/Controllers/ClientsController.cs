@@ -54,7 +54,7 @@ namespace AspMVCDemo.Controllers
             if (ModelState.IsValid)
             {
                 var client = clientViewModel.Client;
-                client.Address = (Address)_context.Address.Single(a => a.ID.Equals(clientViewModel.addressId));
+                client.Address = _context.Address.Single(a => a.ID.Equals(clientViewModel.addressId));
                 _context.Client.Add(client);
                 _context.SaveChanges();
                 return RedirectToAction("Index");
@@ -90,7 +90,7 @@ namespace AspMVCDemo.Controllers
 
             if (ModelState.IsValid)
             {
-                client.Address = (Address)_context.Address.Single(a => a.ID.Equals(clientViewModel.addressId));
+                client.Address = _context.Address.Single(a => a.ID.Equals(clientViewModel.addressId));
                 _context.Update(client);
                 _context.SaveChanges();
                 return RedirectToAction("Index");

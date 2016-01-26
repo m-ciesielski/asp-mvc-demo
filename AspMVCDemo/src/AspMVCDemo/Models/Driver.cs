@@ -41,6 +41,7 @@ namespace AspMVCDemo.Models
         {
             deleted = false;
             available = true;
+            salaryBonus = 0;
         }
     }
 }

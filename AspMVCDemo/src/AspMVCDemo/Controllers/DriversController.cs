@@ -24,9 +24,11 @@ namespace AspMVCDemo.Controllers
         public IActionResult Index(string searchString)
         {
             if (!string.IsNullOrEmpty(searchString))
-                return View(_context.Driver.Where(d => d.lastName.Contains(searchString)));
+                return View((from m in _context.Driver where m.lastName.ToLower().Contains(searchString.ToLower())
+                            select m).Include(d => d.address));
+               // return View(_context.Driver.Where(d => d.lastName.Contains(searchString)));
             else
-                return View(_context.Driver.Include(a => a.address));
+                return View(_context.Driver.Include(d => d.address));
         }
 
         // GET: Drivers/Details/5
@@ -65,7 +67,7 @@ namespace AspMVCDemo.Controllers
             if (ModelState.IsValid)
             {
                 var driver = driverViewModel.driver;
-                driver.address = (Address) _context.Address.Single(a => a.ID.Equals(driverViewModel.addressId));
+                driver.address = _context.Address.Single(a => a.ID.Equals(driverViewModel.addressId));
                 _context.Driver.Add(driver);
                 _context.SaveChanges();
                 return RedirectToAction("Index");
@@ -104,7 +106,7 @@ namespace AspMVCDemo.Controllers
 
             if (ModelState.IsValid)
             {
-                driver.address = (Address)_context.Address.Single(a => a.ID.Equals(driverViewModel.addressId));
+                driver.address = _context.Address.Single(a => a.ID.Equals(driverViewModel.addressId));
                 _context.Update(driver);
                 _context.SaveChanges();
                 return RedirectToAction("Index");

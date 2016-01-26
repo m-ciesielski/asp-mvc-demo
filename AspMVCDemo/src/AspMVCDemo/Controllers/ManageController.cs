@@ -94,29 +94,6 @@ namespace AspMVCDemo.Controllers
             return View();
         }
 
-        //
-        // GET: /Manage/AddRole
-        public IActionResult AddRole()
-        {
-            ViewBag.Roles = _context.Roles.ToList();
-            return View();
-        }
-
-        //
-        // Post: /Manage/AddRole
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public IActionResult AddRole(RoleViewModel roleViewModel)
-        {
-            if(!string.IsNullOrEmpty(roleViewModel.name))
-            {
-                _context.Roles.Add(new IdentityRole(roleViewModel.name));
-                _context.SaveChanges();
-                return RedirectToAction("Index");
-            }
-            ViewBag.Roles = _context.Roles.ToList();
-            return View(roleViewModel);
-        }
 
         //
         // POST: /Manage/AddPhoneNumber

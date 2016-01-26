@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AspMVCDemo.Models;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -8,19 +9,20 @@ namespace AspMVCDemo.Validators
 {
     public class Pesel : ValidationAttribute
     {
-        public Pesel()
-        {
+        private ApplicationDbContext dbContext;
 
+        public Pesel(ApplicationDbContext dbContext)
+        {
+            this.dbContext = dbContext;
         }
+
+        public Pesel(){ }
 
 
 
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)
         {
             string pesel;
-
-            // validation FTW!
-            //return ValidationResult.Success;
 
             if (value == null)
                 return ValidationResult.Success;
@@ -31,12 +33,12 @@ namespace AspMVCDemo.Validators
                 return new ValidationResult("Unable to cast provided PESEL value to string");
 
             if (pesel.Length != 11)
-                return new ValidationResult(String.Format("Pesel %s is not 11 characters long", pesel));
+                return new ValidationResult(String.Format("Pesel {0} is not 11 characters long", pesel));
             
             foreach(char c in pesel)
             {
                 if(!char.IsDigit(c))
-                    return new ValidationResult(String.Format("Pesel %s has non-digit character.", pesel));
+                    return new ValidationResult(String.Format("Pesel {0} has non-digit character.", pesel));
             }
 
             // calculate checksum 
@@ -54,7 +56,11 @@ namespace AspMVCDemo.Validators
             sum += 1 * (int)char.GetNumericValue(pesel.ElementAt(10));
 
             if(sum % 10 != 0)
-                return new ValidationResult(String.Format("Pesel %s doesn't have correct checksum.", pesel));
+                return new ValidationResult(String.Format("Pesel {0} doesn't have correct checksum.", pesel));
+
+            // check PESEL uniqueness within database
+           // if((from m in dbContext.Driver where m.PESEL.Equals(pesel) select m) != null)
+           //   return new ValidationResult(String.Format("Pesel %s is not unique.", pesel));
 
             return ValidationResult.Success;
         }

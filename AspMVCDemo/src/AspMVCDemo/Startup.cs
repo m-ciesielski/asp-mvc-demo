@@ -76,6 +76,9 @@ namespace AspMVCDemo
             {
                 // Since EF 7 doesn't support Seed() like methods, it will be done quite awfully here...
                 var context = serviceScope.ServiceProvider.GetService<ApplicationDbContext>();
+
+                if ((context.Roles.Single(r => r.Name == "Operator")) == null)
+                    context.Roles.Add(new IdentityRole("Operator"));
                 /*
                 context.Address.Add(new Address
                 {

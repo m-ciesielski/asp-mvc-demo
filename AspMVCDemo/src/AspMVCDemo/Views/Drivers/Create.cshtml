@@ -13,7 +13,7 @@
     <div class="form-horizontal">
         <h4>Driver</h4>
         <hr />
-        <div asp-validation-summary="ValidationSummary.ModelOnly" class="text-danger"></div>
+        <div asp-validation-summary="ValidationSummary.All" class="text-danger"></div>
         <div class="form-group">
             <label asp-for="driver.firstName" class="col-md-2 control-label"></label>
             <div class="col-md-10">
@@ -58,7 +58,6 @@
         <div class="form-group">
             <label asp-for="addressId" class="col-md-2 control-label"></label>
             <div class="col-md-10">
-                @*Generating addresses dropdown list *@
                 <select asp-for="addressId" class="form-control">
                     @*Generating addresses dropdown list *@
                     @foreach (var item in ViewBag.Addresses)

@@ -1,25 +1,35 @@
 ﻿@model RoleViewModel
 @{
-    ViewData["Title"] = "Add new role";
+    ViewData["Title"] = "Manage Roles";
 }
 
 <h2>@ViewData["Title"].</h2>
 
 
+<div>
+    <h4>Roles:</h4>
+    <ul class="list-group">
+        @foreach (var role in ViewBag.Roles)
+            {
+            <li class="list-group-item">
+                @role 
+                <div class="pull-right">
+                    <form asp-action="Delete">
+                        <input type="hidden" value=@role.Name name="Name" />
+                        <input type="submit" value="Delete" class="btn btn-danger btn-sm pull-right" />
+                    </form>
+                </div>
+            </li>
+        }
+    </ul>
+</div>
 
 
-<form asp-controller="Manage" asp-action="AddRole" asp-route-returnurl="@ViewData["ReturnUrl"]" method="post" class="form-horizontal" role="form">
+
+<form asp-controller="Role" asp-action="Add" asp-route-returnurl="@ViewData["ReturnUrl"]" method="post" class="form-horizontal" role="form">
     <h4>Add a new role.</h4>
     <h5>@ViewData["Status"]</h5>
     <hr />
-    <div>
-        <ul class="list-group">
-            @foreach (var role in ViewBag.Roles)
-            {
-                <li class="list-group-item">@role</li>
-            }
-        </ul>
-</div>
 
     <div asp-validation-summary="ValidationSummary.All" class="text-danger"></div>
     <div class="form-group">
